@@ -20,7 +20,7 @@ namespace Oil_Bot
         Decimal distanceBetweenOilButtons;
         Decimal lengthOfPressMining;
         Decimal lengthOfPressOil;
-        Decimal waitTime;
+        Decimal miningWaitTime;
 
         public delegate void labelChanger();
 
@@ -33,19 +33,18 @@ namespace Oil_Bot
                 new EventHandler<KeyPressedEventArgs>(hook_KeyPressed);
             hook.RegisterHotKey(Hotkey.ModifierKeys.Control, Keys.Home);
             hook.RegisterHotKey(Hotkey.ModifierKeys.Control, Keys.End);
-            hook.RegisterHotKey(Hotkey.ModifierKeys.Control, Keys.S);
 
-            distanceBetweenOilButtons = 103;
-            lengthOfPressMining = 6000;
-            lengthOfPressOil = 3500;
-            waitTime = 6000;
+            distanceBetweenOilButtons = Properties.Settings.Default.DistanceBetweenOilButtons;
+            lengthOfPressMining = Properties.Settings.Default.MiningLengthOfPress;
+            lengthOfPressOil = Properties.Settings.Default.OilLengthOfPress;
+            miningWaitTime = Properties.Settings.Default.MiningWaitTime;
 
             timer.Tick += Timer_Tick;
             timer.Interval = 20;
 
             LengthOfPressUpDown1.Value = lengthOfPressMining;
             LengthOfPressUpDown2.Value = lengthOfPressOil;
-            WaitTimeUpDown.Value = waitTime;
+            WaitTimeUpDown.Value = miningWaitTime;
             DistanceBetweenUpDown.Value = distanceBetweenOilButtons;
         }
 
@@ -98,10 +97,6 @@ namespace Oil_Bot
                     t = null;
                 }
             }
-            else if (e.Key == Keys.S)
-            {
-
-            }
         }
         void MiningJob()
         {
@@ -111,7 +106,7 @@ namespace Oil_Bot
                 KeyboardHook.E_keyDown();
                 Thread.Sleep(Decimal.ToInt32(lengthOfPressMining));
                 KeyboardHook.E_keyUp();
-                Thread.Sleep(Decimal.ToInt32(waitTime));
+                Thread.Sleep(Decimal.ToInt32(miningWaitTime));
             }
 
         }
@@ -187,7 +182,7 @@ namespace Oil_Bot
         {
             lock (lck)
             {
-                waitTime = WaitTimeUpDown.Value;
+                miningWaitTime = WaitTimeUpDown.Value;
             }
         }
 
@@ -205,6 +200,16 @@ namespace Oil_Bot
             {
                 distanceBetweenOilButtons = DistanceBetweenUpDown.Value;
             }
+        }
+
+        private void OilQueen_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.DistanceBetweenOilButtons = distanceBetweenOilButtons;
+            Properties.Settings.Default.MiningLengthOfPress = lengthOfPressMining;
+            Properties.Settings.Default.OilLengthOfPress = lengthOfPressOil;
+            Properties.Settings.Default.MiningWaitTime = miningWaitTime;
+            Properties.Settings.Default.Save();
+
         }
     }
 }

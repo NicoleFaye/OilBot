@@ -83,7 +83,6 @@ namespace Oil_Bot
             this.label1.Size = new System.Drawing.Size(53, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "Mode:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -93,7 +92,6 @@ namespace Oil_Bot
             this.label2.Size = new System.Drawing.Size(17, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "X:";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // panel1
             // 
@@ -214,7 +212,6 @@ namespace Oil_Bot
             this.label5.Size = new System.Drawing.Size(84, 13);
             this.label5.TabIndex = 0;
             this.label5.Text = "Length of Press:";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // groupBox1
             // 
@@ -294,6 +291,7 @@ namespace Oil_Bot
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "OilQueen";
             this.Text = "Oil Queen";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OilQueen_FormClosing);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
