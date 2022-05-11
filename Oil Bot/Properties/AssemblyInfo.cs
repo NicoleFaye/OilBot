@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Oil Bot")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Bot for Oil and in GTA Rp server")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Oil Bot")]
