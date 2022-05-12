@@ -14,5 +14,8 @@
     <Setting Name="DistanceBetweenOilButtons" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">103</Value>
     </Setting>
+    <Setting Name="MinutesBetweenWalk" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">7</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

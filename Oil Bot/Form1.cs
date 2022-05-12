@@ -21,6 +21,8 @@ namespace Oil_Bot
         Decimal lengthOfPressMining;
         Decimal lengthOfPressOil;
         Decimal miningWaitTime;
+        Decimal afkInterval;
+
 
         public delegate void labelChanger();
 
@@ -38,14 +40,17 @@ namespace Oil_Bot
             lengthOfPressMining = Properties.Settings.Default.MiningLengthOfPress;
             lengthOfPressOil = Properties.Settings.Default.OilLengthOfPress;
             miningWaitTime = Properties.Settings.Default.MiningWaitTime;
+            afkInterval = Properties.Settings.Default.MinutesBetweenWalk;
 
             timer.Tick += Timer_Tick;
             timer.Interval = 20;
 
+            comboBox1.SelectedIndex = 0;
             LengthOfPressUpDown1.Value = lengthOfPressMining;
             LengthOfPressUpDown2.Value = lengthOfPressOil;
             WaitTimeUpDown.Value = miningWaitTime;
             DistanceBetweenUpDown.Value = distanceBetweenOilButtons;
+            WalkIntervalUpDown.Value = afkInterval;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -73,6 +78,10 @@ namespace Oil_Bot
                     {
                         t = new Thread(new ThreadStart(MiningJob));
                     }
+                    else if (comboBox1.SelectedItem.ToString().ToLower() == "afk")
+                    {
+                        t = new Thread(new ThreadStart(afk));
+                    }
                 }
 
                 if (!t.IsAlive)
@@ -93,9 +102,26 @@ namespace Oil_Bot
                     {
                         KeyboardHook.E_keyUp();
                     }
+                    else if (comboBox1.SelectedItem.ToString().ToLower() == "afk")
+                    {
+                        KeyboardHook.W_keyUp();
+                    }
 
                     t = null;
                 }
+            }
+        }
+        void afk()
+        {
+            while (true)
+            {
+                Thread.Sleep(500);
+                KeyboardHook.W_keyDown();
+                Console.WriteLine("keydown");
+                Thread.Sleep(5000);
+                KeyboardHook.W_keyUp();
+                Console.WriteLine("keyup");
+                Thread.Sleep(Decimal.ToInt32(afkInterval) * 60000);
             }
         }
         void MiningJob()
@@ -129,32 +155,6 @@ namespace Oil_Bot
                 Thread.Sleep(200);
 
             }
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
         }
 
 
@@ -208,8 +208,22 @@ namespace Oil_Bot
             Properties.Settings.Default.MiningLengthOfPress = lengthOfPressMining;
             Properties.Settings.Default.OilLengthOfPress = lengthOfPressOil;
             Properties.Settings.Default.MiningWaitTime = miningWaitTime;
+            Properties.Settings.Default.MinutesBetweenWalk = afkInterval;
             Properties.Settings.Default.Save();
 
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void WalkIntervalUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            lock (lck)
+            {
+                afkInterval = WalkIntervalUpDown.Value;
+            }
         }
     }
 }

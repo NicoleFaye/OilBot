@@ -13,6 +13,7 @@ namespace Hotkey
 
 
         public const int E_KEY = 0x45;
+        public const int W_KEY = 0x57;
 
 
         [DllImport("user32.dll", SetLastError = true)]
@@ -24,6 +25,14 @@ namespace Hotkey
         public static void E_keyUp()
         {
             keybd_event(E_KEY, 0, 2, 0);
+        }
+        public static void W_keyDown()
+        {
+            keybd_event(W_KEY, 0, 0, 0);
+        }
+        public static void W_keyUp()
+        {
+            keybd_event(W_KEY, 0, 2, 0);
         }
 
 

@@ -70,5 +70,17 @@ namespace Oil_Bot.Properties {
                 this["DistanceBetweenOilButtons"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        public decimal MinutesBetweenWalk {
+            get {
+                return ((decimal)(this["MinutesBetweenWalk"]));
+            }
+            set {
+                this["MinutesBetweenWalk"] = value;
+            }
+        }
     }
 }
